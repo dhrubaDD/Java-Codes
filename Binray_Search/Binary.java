@@ -1,6 +1,40 @@
-import java.util.Arrays;
+import java.util.*;
 
 class BiSearch{
+
+    // Blooming Flower problem
+    public static int bloomDay(int[] arr, int m,int n){
+        if(m*n>arr.length) return -1;
+
+        int low = Arrays.stream(arr).min().getAsInt();
+        int high = Arrays.stream(arr).max().getAsInt();
+        int mini=high;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int boq=bouquet(arr,mid,m);
+
+            if(boq>=n){
+                mini=Math.min(mini,mid);
+                high=mid-1;
+            }
+            else low=mid+1;
+            
+        }
+        return mini;
+    }
+    public static int bouquet(int[] arr, int d,int flower){
+        int count=0;
+        int boq=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]<=d) count++;
+            else{
+                boq+=count/flower;
+                count=0;
+            }
+        }
+        return boq;
+    }
+
 
     public static int nthRoot(int x, int n){
         int low=0,high=x;
@@ -87,7 +121,12 @@ public class Binary{
         // int[] a={7,8,9,1,2,3,4,5,6};
         // int ind=BiSearch.rotatedSearch(a,8);
         // System.out.println(ind);
-        int ans=BiSearch.nthRoot(64,3);
+        
+        // int ans=BiSearch.nthRoot(64,3);
+        // System.out.println(ans);
+
+        int[]  arr={7,7,7,12,10,10,15,13};
+        int ans=BiSearch.bloomDay(arr,3,2);
         System.out.println(ans);
 
     }
